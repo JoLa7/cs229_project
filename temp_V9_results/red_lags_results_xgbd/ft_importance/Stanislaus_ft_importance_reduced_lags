@@ -1,0 +1,24 @@
+,feature,importance,county
+0,vapor_pressure_diff,0.73067456,Stanislaus
+1,soil_temperature_layer_1_L12,0.08569654,Stanislaus
+2,potential_evaporation,0.07495516,Stanislaus
+3,temperature_L12,0.048660945,Stanislaus
+4,dewpoint_temperature,0.01652743,Stanislaus
+5,leaf_area_index_hi_veg,0.0109289205,Stanislaus
+6,month,0.0068277554,Stanislaus
+7,temperature_L1,0.0042734365,Stanislaus
+8,temperature_L6,0.0037921977,Stanislaus
+9,wind_speed,0.003362893,Stanislaus
+10,relative_humidity,0.0026220947,Stanislaus
+11,surface_pressure,0.0024240385,Stanislaus
+12,precipitation,0.001820579,Stanislaus
+13,runoff,0.0016939834,Stanislaus
+14,surface_runoff,0.0016270572,Stanislaus
+15,volumetric_soil_water_layer_1,0.0014243374,Stanislaus
+16,skin_reservoir_content,0.0014057154,Stanislaus
+17,Unnamed: 0,0.0012823401,Stanislaus
+18,low_veg_cover,0.0,Stanislaus
+19,longitude,0.0,Stanislaus
+20,leaf_area_index_lo_veg,0.0,Stanislaus
+21,latitude,0.0,Stanislaus
+22,hi_veg_cover,0.0,Stanislaus

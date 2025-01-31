@@ -1,0 +1,24 @@
+,feature,importance,county
+0,soil_temperature_layer_1_L12,0.3428621,Orange
+1,temperature_L12,0.31722882,Orange
+2,dewpoint_temperature,0.1891564,Orange
+3,temperature_L1,0.05075423,Orange
+4,vapor_pressure_diff,0.029425362,Orange
+5,volumetric_soil_water_layer_1,0.028067226,Orange
+6,skin_reservoir_content,0.019270396,Orange
+7,potential_evaporation,0.010846508,Orange
+8,runoff,0.0016390731,Orange
+9,Unnamed: 0,0.0016217298,Orange
+10,leaf_area_index_hi_veg,0.0016040611,Orange
+11,month,0.0013461886,Orange
+12,surface_runoff,0.0013281396,Orange
+13,wind_speed,0.001271964,Orange
+14,relative_humidity,0.0010973959,Orange
+15,temperature_L6,0.0009603686,Orange
+16,precipitation,0.00090449554,Orange
+17,surface_pressure,0.0006155204,Orange
+18,low_veg_cover,0.0,Orange
+19,longitude,0.0,Orange
+20,leaf_area_index_lo_veg,0.0,Orange
+21,latitude,0.0,Orange
+22,hi_veg_cover,0.0,Orange

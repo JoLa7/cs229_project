@@ -1,0 +1,23 @@
+,feature,importance,county
+0,Unnamed: 0,0.10887208,Fresno
+1,temp_anom_L1,0.09213958,Fresno
+2,dewpoint_temperature,0.0908486,Fresno
+3,soil_temperature_layer_1_L12,0.08736958,Fresno
+4,surface_pressure,0.08670822,Fresno
+5,relative_humidity,0.06254011,Fresno
+6,month,0.062400818,Fresno
+7,leaf_area_index_hi_veg,0.060160067,Fresno
+8,precipitation,0.05539322,Fresno
+9,vapor_pressure_diff,0.04938523,Fresno
+10,potential_evaporation,0.045253303,Fresno
+11,wind_speed,0.04467911,Fresno
+12,runoff,0.037341632,Fresno
+13,surface_runoff,0.03522524,Fresno
+14,skin_reservoir_content,0.028411353,Fresno
+15,leaf_area_index_lo_veg,0.025080012,Fresno
+16,temp_anom_L10,0.015460034,Fresno
+17,volumetric_soil_water_layer_1,0.012731901,Fresno
+18,low_veg_cover,0.0,Fresno
+19,longitude,0.0,Fresno
+20,latitude,0.0,Fresno
+21,hi_veg_cover,0.0,Fresno

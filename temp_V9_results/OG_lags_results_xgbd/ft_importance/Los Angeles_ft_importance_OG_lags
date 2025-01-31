@@ -1,0 +1,35 @@
+,feature,importance,county
+0,temperature_L12,0.6747496,Los Angeles
+1,soil_temperature_layer_1_L12,0.09219211,Los Angeles
+2,vapor_pressure_diff,0.079647936,Los Angeles
+3,potential_evaporation,0.047783677,Los Angeles
+4,temperature_L6,0.040127095,Los Angeles
+5,temperature_L24,0.022549337,Los Angeles
+6,temperature_L1,0.013930343,Los Angeles
+7,dewpoint_temperature,0.012576822,Los Angeles
+8,temperature_L36,0.0034482263,Los Angeles
+9,skin_reservoir_content,0.002700815,Los Angeles
+10,relative_humidity,0.0021439,Los Angeles
+11,wind_speed,0.001318449,Los Angeles
+12,runoff,0.001069212,Los Angeles
+13,temperature_L10,0.0009604616,Los Angeles
+14,volumetric_soil_water_layer_1,0.0006757539,Los Angeles
+15,temperature_L5,0.000613646,Los Angeles
+16,Unnamed: 0,0.0005479543,Los Angeles
+17,temperature_L11,0.00051627704,Los Angeles
+18,surface_runoff,0.00044691228,Los Angeles
+19,temperature_L2,0.00038506798,Los Angeles
+20,temperature_L3,0.00038302867,Los Angeles
+21,temperature_L4,0.00028137775,Los Angeles
+22,temperature_L9,0.00026397052,Los Angeles
+23,surface_pressure,0.00025583204,Los Angeles
+24,temperature_L7,0.0002288784,Los Angeles
+25,precipitation,0.00020326361,Los Angeles
+26,temperature_L8,0.0,Los Angeles
+27,month,0.0,Los Angeles
+28,low_veg_cover,0.0,Los Angeles
+29,longitude,0.0,Los Angeles
+30,leaf_area_index_lo_veg,0.0,Los Angeles
+31,leaf_area_index_hi_veg,0.0,Los Angeles
+32,latitude,0.0,Los Angeles
+33,hi_veg_cover,0.0,Los Angeles

@@ -1,0 +1,23 @@
+,feature,importance,county
+0,relative_humidity,0.13478696,Riverside
+1,leaf_area_index_hi_veg,0.1341441,Riverside
+2,wind_speed,0.10792782,Riverside
+3,vapor_pressure_diff,0.07771138,Riverside
+4,skin_reservoir_content,0.074436955,Riverside
+5,Unnamed: 0,0.0685127,Riverside
+6,month,0.06361787,Riverside
+7,soil_temperature_layer_1_L12,0.060434297,Riverside
+8,potential_evaporation,0.04519267,Riverside
+9,surface_pressure,0.04114552,Riverside
+10,dewpoint_temperature,0.032984447,Riverside
+11,temp_anom_L10,0.032029174,Riverside
+12,volumetric_soil_water_layer_1,0.031519502,Riverside
+13,temp_anom_L1,0.030100891,Riverside
+14,precipitation,0.020723969,Riverside
+15,leaf_area_index_lo_veg,0.019686256,Riverside
+16,surface_runoff,0.013871492,Riverside
+17,runoff,0.01117402,Riverside
+18,low_veg_cover,0.0,Riverside
+19,longitude,0.0,Riverside
+20,latitude,0.0,Riverside
+21,hi_veg_cover,0.0,Riverside

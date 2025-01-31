@@ -1,0 +1,24 @@
+,feature,importance,county
+0,vapor_pressure_diff,0.69442517,Sacramento
+1,potential_evaporation,0.16873467,Sacramento
+2,temperature_L12,0.047532897,Sacramento
+3,soil_temperature_layer_1_L12,0.02545183,Sacramento
+4,dewpoint_temperature,0.0210408,Sacramento
+5,leaf_area_index_hi_veg,0.016139159,Sacramento
+6,surface_pressure,0.008400793,Sacramento
+7,temperature_L6,0.006011842,Sacramento
+8,month,0.00466743,Sacramento
+9,temperature_L1,0.0035684134,Sacramento
+10,volumetric_soil_water_layer_1,0.00088338,Sacramento
+11,surface_runoff,0.00073739345,Sacramento
+12,wind_speed,0.0006034658,Sacramento
+13,precipitation,0.00049581006,Sacramento
+14,Unnamed: 0,0.00035370458,Sacramento
+15,relative_humidity,0.0003354759,Sacramento
+16,runoff,0.0003333406,Sacramento
+17,skin_reservoir_content,0.0002844391,Sacramento
+18,low_veg_cover,0.0,Sacramento
+19,longitude,0.0,Sacramento
+20,leaf_area_index_lo_veg,0.0,Sacramento
+21,latitude,0.0,Sacramento
+22,hi_veg_cover,0.0,Sacramento

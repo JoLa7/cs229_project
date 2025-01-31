@@ -1,0 +1,24 @@
+,feature,importance,county
+0,vapor_pressure_diff,0.91051084,San Bernardino
+1,potential_evaporation,0.029832594,San Bernardino
+2,soil_temperature_layer_1_L12,0.01900686,San Bernardino
+3,dewpoint_temperature,0.009078088,San Bernardino
+4,leaf_area_index_lo_veg,0.0077566947,San Bernardino
+5,temperature_L12,0.0070340796,San Bernardino
+6,wind_speed,0.0022316424,San Bernardino
+7,leaf_area_index_hi_veg,0.0022203315,San Bernardino
+8,volumetric_soil_water_layer_1,0.0019887402,San Bernardino
+9,month,0.0017959861,San Bernardino
+10,precipitation,0.0017003684,San Bernardino
+11,skin_reservoir_content,0.0017002841,San Bernardino
+12,runoff,0.0013481565,San Bernardino
+13,temperature_L1,0.001218426,San Bernardino
+14,surface_pressure,0.00073765824,San Bernardino
+15,temperature_L6,0.00056912383,San Bernardino
+16,Unnamed: 0,0.00055690354,San Bernardino
+17,relative_humidity,0.0005109571,San Bernardino
+18,surface_runoff,0.0002021976,San Bernardino
+19,low_veg_cover,0.0,San Bernardino
+20,longitude,0.0,San Bernardino
+21,latitude,0.0,San Bernardino
+22,hi_veg_cover,0.0,San Bernardino

@@ -1,0 +1,23 @@
+,feature,importance,county
+0,relative_humidity,0.11466772,San Joaquin
+1,volumetric_soil_water_layer_1,0.097216785,San Joaquin
+2,soil_temperature_layer_1_L12,0.09202999,San Joaquin
+3,dewpoint_temperature,0.07604143,San Joaquin
+4,vapor_pressure_diff,0.074985884,San Joaquin
+5,temp_anom_L1,0.06786881,San Joaquin
+6,leaf_area_index_hi_veg,0.06774681,San Joaquin
+7,Unnamed: 0,0.044799913,San Joaquin
+8,month,0.04369628,San Joaquin
+9,surface_runoff,0.04330038,San Joaquin
+10,wind_speed,0.04284623,San Joaquin
+11,potential_evaporation,0.042518575,San Joaquin
+12,skin_reservoir_content,0.03817548,San Joaquin
+13,temp_anom_L10,0.035134736,San Joaquin
+14,runoff,0.031935986,San Joaquin
+15,precipitation,0.031243553,San Joaquin
+16,surface_pressure,0.028470932,San Joaquin
+17,leaf_area_index_lo_veg,0.027320432,San Joaquin
+18,low_veg_cover,0.0,San Joaquin
+19,longitude,0.0,San Joaquin
+20,latitude,0.0,San Joaquin
+21,hi_veg_cover,0.0,San Joaquin
