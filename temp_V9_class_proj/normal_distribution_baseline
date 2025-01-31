@@ -1,0 +1,147 @@
+import pandas as pd
+import numpy as np
+from scipy.stats import norm
+
+###############################
+# 1) Quantile Score Function
+###############################
+def quantile_score(y, y_quantiles, quantiles=np.arange(0.01, 1.0, 0.01)):
+    """
+    Same function from your XGBD code.
+
+    input:
+        y = the true temperature value
+        y_quantiles = array/list of predicted quantiles 
+                      [q_0.01, q_0.02, ..., q_0.99]
+        quantiles = array/list of quantile levels [0.01, 0.02, ..., 0.99]
+
+    output:
+        scalar quantile score
+    """
+    diff = y - y_quantiles
+    error = np.zeros(len(diff))
+    error[diff >= 0] = quantiles[diff >= 0] * np.abs(diff[diff >= 0])
+    error[diff < 0] = (1 - quantiles[diff < 0]) * np.abs(diff[diff < 0])
+    return np.sum(error) / len(quantiles)
+
+###############################
+# 2) Log-likelihood loss (same)
+###############################
+def loss(n, mean, std):
+    if std <= 1e-6:
+        # If standard deviation is effectively zero,
+        # return a large negative log-likelihood
+        return -1e10  
+    else:
+        pdf_val = norm.pdf(n, loc=mean, scale=std)
+        # avoid log(0) = -inf by bounding
+        return np.log(pdf_val if pdf_val > 1e-15 else 1e-15)
+
+###############################
+# 3) Load Data
+###############################
+data = pd.read_csv("\\Users\\lazar\\Documents\\PhD_Courses\\Labs\\Mordecai\\WNV_CDPH_temp_forecasts\\V4\\prepping_datasets_and_comparison\\cleaned_weather_ds_v1.csv")
+data["month"] = data["month"].astype(int)
+counties = data["county"].unique()
+n_counties = len(counties)
+
+###############################
+# 4) Prepare Storage
+###############################
+# We have test_year in [2017..2023], which is 7 distinct years
+store_params = np.zeros((7, 12 * n_counties, 2))  # shape: (7, 12*n_counties, 2)
+
+###############################
+# 5) Fit Normal Parameters 
+###############################
+for test_year in range(2017, 2024):
+    year_idx = test_year - 2017
+    
+    # *Note:* your code had train <= test_year, test > test_year
+    data_train = data[data["year"] <= test_year]
+    # data_test = data[data["year"] > test_year]  # Not explicitly needed for fitting.
+    
+    idx = 0
+    for county in counties:
+        for month in range(1, 13):
+            subset = data_train[(data_train["county"] == county) & 
+                                (data_train["month"] == month)]
+            values = subset["temperature"]
+            
+            if len(values) == 0:
+                mean_ = 0.0
+                std_  = 1e-6
+            else:
+                mean_ = np.mean(values)
+                std_  = np.std(values, ddof=1)
+                if np.isnan(std_) or std_ <= 1e-6:
+                    std_ = 1e-6
+
+            store_params[year_idx, idx, 0] = mean_
+            store_params[year_idx, idx, 1] = std_
+            idx += 1
+
+###############################
+# 6) Evaluate the Baseline Model 
+#    (Log-likelihood + Quantile Score)
+###############################
+quantiles = np.array([round(q, 2) for q in np.arange(0.01, 1, 0.01)])
+all_results = []
+errors_ll = []  # store log-likelihood results
+
+for test_year in range(2017, 2024):
+    year_idx = test_year - 2017
+    
+    data_test = data[data["year"] == test_year]
+    
+    # Create baseline predictions for every (county, month)
+    county_repeat = np.repeat(counties, 12)
+    months        = np.tile(np.arange(1, 13), n_counties)
+    
+    baseline_df = pd.DataFrame({
+        "county": county_repeat,
+        "month": months,
+        "mean": store_params[year_idx, :, 0],
+        "std":  store_params[year_idx, :, 1]
+    })
+    
+    # Merge with test data
+    merged = pd.merge(data_test, baseline_df, on=["county", "month"], how="left")
+    
+    # 6a) Log-likelihood
+    merged["norm_loss"] = merged.apply(
+        lambda row: loss(row["temperature"], row["mean"], row["std"]),
+        axis=1
+    )
+    year_loss = merged["norm_loss"].mean()
+    errors_ll.append(year_loss)
+    
+    # 6b) Quantile Score
+    # Compute quantile predictions from the Normal distribution
+    # For each row, we'll generate q_0.01..q_0.99 and then apply quantile_score
+    def row_quantile_score(row):
+        # Evaluate all 99 quantiles from the Normal:
+        q_values = norm.ppf(quantiles, loc=row["mean"], scale=row["std"])
+        # Now compute the quantile score with respect to the observed "temperature"
+        return quantile_score(row["temperature"], q_values, quantiles=quantiles)
+    
+    merged["quantile_score"] = merged.apply(row_quantile_score, axis=1)
+    
+    # Store or print results
+    print(f"Test Year {test_year} - Mean Log-Lik: {year_loss:.3f}  |  Mean QS: {merged['quantile_score'].mean():.3f}")
+    
+    # Keep the relevant columns
+    # If you want to rename "mean"->"mu" and "std"->"sigma" to be consistent:
+    merged.rename(columns={"mean":"mu", "std":"sigma"}, inplace=True)
+    all_results.append(merged[["county","year","month","temperature","mu","sigma","norm_loss","quantile_score"]])
+
+###############################
+# 7) Finalize / Save Results
+###############################
+final_df = pd.concat(all_results, ignore_index=True)
+print(f"Overall mean Log-Likelihood from 2017-2023 = {np.mean(errors_ll):.3f}")
+
+# Save final CSV
+#final_df.to_csv("baseline_normal_with_quantile_scores.csv", index=False)
+
+final_df.to_csv("baseline_normal_with_quantile_scores.csv", index=False)
