@@ -1,0 +1,22 @@
+baseline: {Temperature: lag 12}
+
+OG_lags: {Temperature: 1-12 + 24 + 36, soil_temperature_layer_1: lag 12}
+
+Reduced_lags: {Temperature: 1 + 6 + 12, soil_temperature_layer_1: lag 12}
+
+Anom_lags: {Temperature: 1-12 + 24 + 36, soil_temperature_layer_1: lag 12}
+
+
+Changes:
+
+For the baseline model, I am removing the simulation portion, since there is 
+realistically no need for this. The model is only being trained on L12, hence, 
+I don't believe there is a need of creating the simulations since the model wont
+use any of the simulated lags within a < 1 year time span. 
+-->  By removing the simulation loops, I am simply predicting directly from 
+the model's distributional output and then calculating quantile scores against 
+the observed data (for the years where you have actual data).
+Thus, quantile derivation changed from a stochastic approximation to a 
+deterministic calculation.
+
+We are also increasing the number of lags
