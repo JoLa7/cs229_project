@@ -1,10 +1,10 @@
-baseline: {Temperature: lag 12}
+anomolies baseline XGBD: {anomolies Temperature: lag 12}
 
-OG_lags: {Temperature: 1-12 + 24 + 36, soil_temperature_layer_1: lag 12}
+OG_lags XGBD : {Temperature: 1-12 + 24 + 36, soil_temperature_layer_1: lag 12}
 
-Reduced_lags: {Temperature: 1 + 6 + 12, soil_temperature_layer_1: lag 12}
+Reduced_lags XGBD : {Temperature: 1 + 6 + 12, soil_temperature_layer_1: lag 12}
 
-Anom_lags: {Temperature: 1-12 + 24 + 36, soil_temperature_layer_1: lag 12}
+anomolies OG Lags XGBD : {Temperature: 1-12 + 24 + 36, soil_temperature_layer_1: lag 12}
 
 
 Changes:
