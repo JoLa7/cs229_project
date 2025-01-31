@@ -1,0 +1,24 @@
+,feature,importance,county
+0,soil_temperature_layer_1,0.9519956,Solano
+1,hist_temp_avg,0.024822062,Solano
+2,vapor_pressure_diff,0.005106668,Solano
+3,temp_anom,0.003669912,Solano
+4,month,0.0024604532,Solano
+5,wind_speed,0.0022287264,Solano
+6,potential_evaporation,0.001888481,Solano
+7,dewpoint_temperature,0.0015812415,Solano
+8,skin_reservoir_content,0.0012437225,Solano
+9,temp_anom_L12,0.0009476752,Solano
+10,relative_humidity,0.00064710475,Solano
+11,leaf_area_index_hi_veg,0.0005928706,Solano
+12,runoff,0.00055624376,Solano
+13,Unnamed: 0,0.0005232131,Solano
+14,precipitation,0.0004964638,Solano
+15,volumetric_soil_water_layer_1,0.0004615899,Solano
+16,surface_runoff,0.00042127646,Solano
+17,surface_pressure,0.0003566567,Solano
+18,low_veg_cover,0.0,Solano
+19,longitude,0.0,Solano
+20,leaf_area_index_lo_veg,0.0,Solano
+21,latitude,0.0,Solano
+22,hi_veg_cover,0.0,Solano

@@ -1,0 +1,24 @@
+,feature,importance,county
+0,soil_temperature_layer_1,0.965411,Tulare
+1,vapor_pressure_diff,0.01344034,Tulare
+2,potential_evaporation,0.0075907498,Tulare
+3,temp_anom,0.0027795166,Tulare
+4,dewpoint_temperature,0.0019821564,Tulare
+5,month,0.0012806975,Tulare
+6,precipitation,0.0012650196,Tulare
+7,leaf_area_index_hi_veg,0.0012358952,Tulare
+8,hist_temp_avg,0.001162905,Tulare
+9,skin_reservoir_content,0.00095336436,Tulare
+10,surface_pressure,0.00067158067,Tulare
+11,volumetric_soil_water_layer_1,0.000522262,Tulare
+12,wind_speed,0.0004668797,Tulare
+13,temp_anom_L12,0.0002833434,Tulare
+14,relative_humidity,0.00028211786,Tulare
+15,Unnamed: 0,0.000259481,Tulare
+16,runoff,0.00023239816,Tulare
+17,surface_runoff,0.0001718157,Tulare
+18,leaf_area_index_lo_veg,8.538103e-06,Tulare
+19,low_veg_cover,0.0,Tulare
+20,longitude,0.0,Tulare
+21,latitude,0.0,Tulare
+22,hi_veg_cover,0.0,Tulare

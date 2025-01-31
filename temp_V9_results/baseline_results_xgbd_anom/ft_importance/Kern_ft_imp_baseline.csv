@@ -1,0 +1,24 @@
+,feature,importance,county
+0,soil_temperature_layer_1,0.9663958,Kern
+1,vapor_pressure_diff,0.019277357,Kern
+2,hist_temp_avg,0.0036303794,Kern
+3,month,0.0028531284,Kern
+4,temp_anom,0.0025250933,Kern
+5,wind_speed,0.0017259476,Kern
+6,dewpoint_temperature,0.00056765723,Kern
+7,skin_reservoir_content,0.0005389131,Kern
+8,potential_evaporation,0.00043241924,Kern
+9,surface_pressure,0.00039975657,Kern
+10,relative_humidity,0.00033680547,Kern
+11,Unnamed: 0,0.00024658575,Kern
+12,surface_runoff,0.00021921344,Kern
+13,precipitation,0.00019526704,Kern
+14,temp_anom_L12,0.00017988372,Kern
+15,volumetric_soil_water_layer_1,0.0001719034,Kern
+16,leaf_area_index_hi_veg,0.00016134534,Kern
+17,runoff,0.00014254577,Kern
+18,low_veg_cover,0.0,Kern
+19,longitude,0.0,Kern
+20,leaf_area_index_lo_veg,0.0,Kern
+21,latitude,0.0,Kern
+22,hi_veg_cover,0.0,Kern
