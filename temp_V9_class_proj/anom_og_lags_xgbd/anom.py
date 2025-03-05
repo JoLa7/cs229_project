@@ -118,15 +118,7 @@ data = data[data["year"] >= 1991]
 data = data.sort_values(by = ["year", "county", "month"])
 
 ### Create list of variables to fit the data ###
-fit_vars = data.columns.to_list()
-
-fit_vars.remove("year")
-fit_vars.remove("county")
-fit_vars.remove("temperature") # pretty sure we gotta remove temperature since that is what we are predicting
-fit_vars.remove("soil_temperature_layer_1")
-fit_vars.remove("hist_temp_avg")
-fit_vars.remove("temp_anom")
-print(fit_vars)
+fit_vars = ["year", "month",'temp_anom_L1', 'temp_anom_L2', 'temp_anom_L3', 'temp_anom_L4', 'temp_anom_L5', 'temp_anom_L6', 'temp_anom_L7', 'temp_anom_L8', 'temp_anom_L9', 'temp_anom_L10', 'temp_anom_L11', 'temp_anom_L12', 'temp_anom_L24', 'temp_anom_L36', 'soil_temperature_layer_1_L12']
 
 ################################ Model Validation ##############################
 
@@ -239,7 +231,7 @@ model = {}
 
 #### The idea is that now that we have ID'd our best Hyps, we go ahead and train the model from scratch using the best hyps
 
-for test_year in [2018, 2019, 2020, 2021, 2022, 2023, 2024]: # 6 years Mauricio wanted 
+for test_year in [2018, 2019, 2020, 2021, 2022, 2023, 2024]: # 6 years Mauricio wanted  # we can add 2025 soon! 
     train = county_data[county_data["year"] < test_year]
     test = county_data[county_data["year"] == test_year]
 
@@ -249,14 +241,9 @@ for test_year in [2018, 2019, 2020, 2021, 2022, 2023, 2024]: # 6 years Mauricio 
     X_test[test_year] = np.array(test[fit_vars])
     y_test[test_year] = np.array(test["temp_anom"])
 
-    if test_year <= 2023:
-        best_model[test_year] = xgbd_model.fit(
-            X_train[test_year],
-            y_train[test_year],
-            eval_set = [(X_test[test_year], y_test[test_year])])
-
-    else: # year 2024 
-        best_model[test_year] = xgbd_model.fit(X_train[test_year], y_train[test_year])
+    best_model[test_year] = xgbd_model.fit(
+        X_train[test_year],
+        y_train[test_year])
         
         
 ######################### Using the models we trained and tested, we create simulations ############################
@@ -374,7 +361,7 @@ for _, row in year_month_combinations.iterrows():
             "month": month
         }
 
-        if test_year <= 2023: # change once we get 2024 data
+        if test_year <= 2024: # change once we get 2024 data (when 2025 gets introduced this will make sense) 
             # retreive the observed temp for the month
             observed_temp_series = all_simulation_results_df.loc[cond, "temperature"]
             observed_temp = observed_temp_series.iloc[0]
