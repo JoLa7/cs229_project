@@ -1,0 +1,617 @@
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+### Analysis for Sherlock Version 8 extending simulations
+
+```{r}
+path_to_results <- "C:\\Users\\lazar\\Documents\\PhD_Courses\\Labs\\Mordecai\\WNV_CDPH_temp_forecasts\\V5_class_project\\results"
+```
+
+
+Anomolies
+```{r}
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "anom_og_lags_xgbd", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+
+# Read and combine all CSV files with a new 'county' column
+anom_all_lags <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+anom_all_lags$model_type = "anomolies: temp: {1-12 + 24 + 36}, soil_temperature_layer_1: lag 12"
+```
+
+One ten lag
+```{r}
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "anom_one_ten_xgbd", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+
+# Read and combine all CSV files with a new 'county' column
+anom_one_ten_lag <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+anom_one_ten_lag$model_type = "anomolies 1:{temp} 10:{weather} lag"
+```
+
+
+ Wanting to see if testing changes anything
+```{r}
+
+# Construct the full path using file.path
+directory_path <- "\\Users\\lazar\\Downloads\\red_lags_results_xgbd_test\\quantile_scores"
+
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+
+# Read and combine all CSV files with a new 'county' column
+red_lags_test <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+red_lags_test$model_type = "XGBD reduced lag TEST"
+```
+
+
+OG_Lags:
+```{r}
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "OG_lags_results_xgbd", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+# Read and combine all CSV files with a new 'county' column
+og_lags <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+og_lags$model_type = "Original XGBD Lags (L1-12, 24, 36 {temp} + others)"
+```
+
+Reduced lags:
+
+```{r}
+
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "red_lags_results_xgbd", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+
+# Read and combine all CSV files with a new 'county' column
+reduced_lags <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+reduced_lags$model_type = "XGBD Reduced Lags Temp: {1,6,12} soil_temp {12}"
+```
+
+Baseline
+```{r}
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "baseline_results_xgbd_anom", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+# Read and combine all CSV files with a new 'county' column
+baseline_lags <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+baseline_lags$model_type = "Baseline Temp:{L12} XGBD anom Lags"
+```
+
+
+```{r}
+norm_lags = read.csv("\\Users\\lazar\\Documents\\PhD_Courses\\Labs\\Mordecai\\WNV_CDPH_temp_forecasts\\V4\\norm_baseline\\baseline_normal_with_quantile_scores.csv")
+
+norm_lags$model_type = "Baseline Norm Lags"
+
+norm_lags = norm_lags %>% 
+  select(year, month, temperature, quantile_score, county, model_type) %>% 
+  mutate(X = row_number() - 1)  # Add row number starting from 0
+```
+
+
+# integrating GP models:
+```{r}
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "baseline_anom_gp", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+# Read and combine all CSV files with a new 'county' column
+baseline_anom_gp <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+baseline_anom_gp$model_type = "Baseline Temp:{L12} GP anom Lags"
+
+baseline_anom_gp = baseline_anom_gp %>% 
+  select(X,county, year, month, model_type, temperature, quantile_score)
+```
+
+```{r}
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "baseline_gp", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+# Read and combine all CSV files with a new 'county' column
+baseline_gp <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+baseline_gp$model_type = "Baseline Temp:{L12} GP Lags"
+
+baseline_gp = baseline_gp %>% 
+  select(X,county, year, month, model_type, temperature, quantile_score)
+```
+
+
+```{r}
+baseline_lags = baseline_lags %>% 
+  select(X, year, month, temperature, quantile_score, county, model_type)
+combined_df = rbind(anom_one_ten_lag,og_lags,anom_all_lags,reduced_lags,baseline_lags, norm_lags)
+#combined_df = rbind(anom_all_lags, anom_one_ten_lag,og_lags,anom_all_lags,reduced_lags)
+
+
+combined_df = combined_df %>% 
+  filter(month >=4) %>% 
+  select(county, year, month, model_type, temperature, quantile_score)
+```
+
+
+
+
+```{r}
+# Aggregate total quantile scores across all counties
+df_summary_total <- combined_df %>%
+  filter(year >= 2018 & year <= 2024) %>%
+  group_by(model_type) %>%
+  summarise(total_quantile_score = sum(quantile_score, na.rm = TRUE))
+
+# Plot the total scores
+ggplot(df_summary_total, aes(x = reorder(model_type, total_quantile_score), 
+                             y = total_quantile_score, 
+                             fill = ifelse(model_type == "Baseline Norm Lags", "red", "gray"))) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(total_quantile_score, 2)), 
+            hjust = -0.1, 
+            color = "black", 
+            size = 3) + # Add text annotations with total scores
+  scale_fill_identity() + # Use scale_fill_identity to directly use the specified colors
+  coord_flip() +
+  labs(title = "Comparison of Model Errors by Lag Type",
+       x = "Lag Type",
+       y = "Total Quantile Score (2018 - 2023)") +
+  theme_minimal()
+```
+
+
+
+### Looking at LA red lags results:
+
+```{r}
+# LA_red_lags_xgbd = read.csv("\\Users\\lazar\\Documents\\PhD_Courses\\Labs\\Mordecai\\WNV_CDPH_temp_forecasts\\V5_class_project\\results\\red_lags_results_xgbd\\simulation_values\\Los Angeles_simulation_values_reduced_lags.csv")
+
+# the following is with test:
+
+LA_red_lags_xgbd = read.csv("\\Users\\lazar\\Documents\\PhD_Courses\\Labs\\Mordecai\\WNV_CDPH_temp_forecasts\\V5_class_project\\results\\anom_og_lags_xgbd\\simulation_values\\Los Angeles_simulation_values_anom_lags.csv")
+
+LA_red_lags_xgbd <- LA_red_lags_xgbd %>% 
+  mutate(
+    simulated_temperature = simulated_temp_anom + hist_temp_avg,
+    mu = mu + hist_temp_avg
+  )
+
+```
+
+```{r}
+test = LA_red_lags_xgbd %>% 
+  filter(year == 2020 & month == 4)
+  
+```
+
+
+```{r}
+# colMax <- function(data) sapply(data, max, na.rm = TRUE)
+# 
+# colMax(LA_red_lags_xgbd)
+
+test = LA_red_lags_xgbd %>% 
+  filter(year == 2018)
+
+
+unique(LA_red_lags_xgbd$year)
+```
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# Suppose your data frame is called LA_red_lags_xgbd
+
+# 1. Create a 'date' column for plotting on the x-axis
+LA_red_lags_xgbd <- LA_red_lags_xgbd %>%
+  mutate(
+    date = as.Date(paste(year, month, "1", sep = "-"), format = "%Y-%m-%d")
+  )
+
+# 2. Create the plot
+ggplot(LA_red_lags_xgbd, aes(x = date)) +
+  
+  # 2a. Plot the observed temperature (one line across all months)
+  geom_line(
+    aes(y = temperature, color = "Observed Temperature"), 
+    size = 1
+  ) +
+  
+  # 2b. Plot the mu values (only meaningful for months 4–12),
+  #     grouped by the simulation_number so each simulation is connected
+  geom_line(
+    aes(y = mu, group = simulation_number, color = "Simulated mu")
+  ) +
+  
+  # 3. Customize colors
+  # scale_color_manual(
+  #   values = c("Observed Temperature" = "blue", "Simulated mu" = "red")
+  # ) +
+  
+  # 4. Format x-axis to show yearly ticks
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  
+  # 5. Add labels and a clean theme
+  labs(
+    title = "Los Angeles Temperature and Simulated Paths",
+    x = "Year",
+    y = "Temperature (°C)",   # or °F, depending on your data
+    color = "Legend"
+  ) +
+  theme_minimal()
+
+```
+
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+set.seed(123)  # Ensures reproducibility
+
+# 1) Subset rows to only months (4–12) that have mu/sigma
+LA_sim <- LA_red_lags_xgbd %>%
+  filter(!is.na(mu)) %>%
+  mutate(sim_group = interaction(simulation_number, year))
+
+# 2) Sample 2,500 unique simulation numbers
+sampled_simulations <- sample(unique(LA_sim$simulation_number), 2500, replace = FALSE)
+
+# 3) Filter dataset to only include sampled simulation paths
+LA_sim_sampled <- LA_sim %>%
+  filter(simulation_number %in% sampled_simulations)
+
+# 4) Plot with a legend for the simulated CI and observed temperature
+ggplot() +
+  
+  # (A) Ribbon for each simulation's CI (months 4–12 only)
+  # Map fill to a constant so it appears in the legend.
+  geom_ribbon(
+    data = LA_sim_sampled,
+    aes(
+      x = date,
+      ymin = mu - 1.96 * sigma,
+      ymax = mu + 1.96 * sigma,
+      group = sim_group,
+      fill = "Simulated 95% CI"
+    ),
+    alpha = 0.1
+  ) +
+  
+  # (B) mu line for each sampled simulation (drawn in a neutral color without legend)
+  geom_line(
+    data = LA_sim_sampled,
+    aes(
+      x = date,
+      y = mu,
+      group = sim_group
+    ),
+    color = "gray70",
+    alpha = 0.6,
+    show.legend = FALSE
+  ) +
+  
+  # (C) Observed temperature line (for all months, all years)
+  # Map color to a constant so it appears in the legend.
+  geom_point(
+  data = LA_red_lags_xgbd,
+  aes(x = date, y = temperature, color = "Observed Temperature"),
+  size = 2
+  ) +
+  
+  # Define manual scales for fill and color.
+  scale_fill_manual(
+    name = "Legend",
+    values = c("Simulated 95% CI" = "lightpink")
+  ) +
+  scale_color_manual(
+    name = "Legend",
+    values = c("Observed Temperature" = "black")
+  ) +
+  
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  labs(
+    title = "Los Angeles Temperature with Sampled Simulated Paths & 95% CI (Apr–Dec)",
+    x = "Date",
+    y = "Temperature"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "top")
+```
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+set.seed(123)  # Ensures reproducibility
+
+# 1) Subset rows to only months (4–12) that have mu/sigma
+LA_sim <- LA_red_lags_xgbd %>%
+  filter(!is.na(simulated_temperature)) %>%
+  mutate(sim_group = interaction(simulation_number, year))
+
+# 2) Sample 2,500 unique simulation numbers
+sampled_simulations <- sample(unique(LA_sim$simulation_number), 2500, replace = FALSE)
+
+# 3) Filter dataset to only include sampled simulation paths
+LA_sim_sampled <- LA_sim %>%
+  filter(simulation_number %in% sampled_simulations)
+
+# 4) Plot with a legend for the simulated CI and observed temperature
+ggplot() +
+  
+  # # (A) Ribbon for each simulation's CI (months 4–12 only)
+  # # Map fill to a constant so it appears in the legend.
+  # geom_ribbon(
+  #   data = LA_sim_sampled,
+  #   aes(
+  #     x = date,
+  #     ymin = mu - 1.96 * sigma,
+  #     ymax = mu + 1.96 * sigma,
+  #     group = sim_group,
+  #     fill = "Simulated 95% CI"
+  #   ),
+  #   alpha = 0.1
+  # ) +
+  
+  # (B) mu line for each sampled simulation (drawn in a neutral color without legend)
+  geom_line(
+    data = LA_sim_sampled,
+    aes(
+      x = date,
+      y = simulated_temperature,
+      group = sim_group
+    ),
+    color = "gray70",
+    alpha = 0.6,
+    show.legend = FALSE
+  ) +
+  
+  # (C) Observed temperature line (for all months, all years)
+  # Map color to a constant so it appears in the legend.
+  geom_point(
+  data = LA_red_lags_xgbd,
+  aes(x = date, y = temperature, color = "Observed Temperature"),
+  size = 2
+  ) +
+  
+  # Define manual scales for fill and color.
+  scale_fill_manual(
+    name = "Legend",
+    values = c("Simulated 95% CI" = "lightpink")
+  ) +
+  scale_color_manual(
+    name = "Legend",
+    values = c("Observed Temperature" = "black")
+  ) +
+  
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  labs(
+    title = "Los Angeles Temperature with Sampled Simulated Paths & 95% CI (Apr–Dec)",
+    x = "Date",
+    y = "Temperature"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "top")
+```
+
+
+
+```{r}
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "baseline_results_xgbd_anom", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+# Read and combine all CSV files with a new 'county' column
+baseline_lags <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+baseline_lags$model_type = "Baseline Temp:{L12} XGBD anom Lags"
+```
+
+```{r}
+library(lubridate)
+
+# Filter and mutate the data
+baseline_lags <- baseline_lags %>%
+  mutate(mu = as.numeric(mu),
+         sigma = as.numeric(sigma),
+         date = ymd(paste(year, month, "01", sep = "-")))
+
+# Calculate the prediction intervals
+baseline_lags <- baseline_lags %>%
+  mutate(predicted_temp = mu,
+         lower_bound = qnorm(0.025, mean = mu, sd = sigma),
+         upper_bound = qnorm(0.975, mean = mu, sd = sigma))
+
+
+# Create the ggplot
+baseline_lags <- baseline_lags %>% 
+  filter(county %in% c("Los Angeles", "Sacramento", "Placer", "Stanislaus", "Kern", "Fresno"))
+
+
+ggplot(baseline_lags, aes(x = date)) +
+  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = 'lightcoral', alpha = 0.4) +  # Ribbon for prediction interval
+  geom_line(aes(y = predicted_temp), color = '#8C1515', size = 1.2) +  # Prediction line
+  geom_point(aes(y = temperature), color = 'blue', size = 2) +  # True temperature as blue dots
+  labs(title = "Prediction of Temperature Values w/ Baseline Temp:{L12} XGBD anom Lags",
+       x = "Date",
+       y = "Temperature") +
+  theme_bw() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    strip.text = element_text(size = 14, face = "bold"),
+    panel.grid.major = element_line(size = 0.5, linetype = 'dotted', color = 'gray'),
+    panel.grid.minor = element_blank()
+  ) +
+  facet_wrap(~ county, scales = "free_y", ncol = 2, nrow = 3)
+
+```
+
+```{r}
+# Construct the full path using file.path
+directory_path <- file.path(path_to_results, "baseline_anom_gp", "quantile_scores")
+
+# Normalize the path to match your R version's expected format
+directory_path <- normalizePath(directory_path, winslash = "\\")
+
+csv_files <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
+# Read and combine all CSV files with a new 'county' column
+baseline_lags_gp <- csv_files %>%
+  lapply(function(file) {
+    # Extract the county name from the filename
+
+    # Read the CSV and add the county column
+    data <- read.csv(file)
+    return(data)
+  }) %>%
+  bind_rows()
+baseline_lags_gp$model_type = "Baseline Temp:{L12} gp anom Lags"
+```
+
+
+```{r}
+
+# Filter and mutate the data
+baseline_lags_gp <- baseline_lags_gp %>%
+  mutate(mu = as.numeric(mu),
+         sigma = as.numeric(sigma),
+         date = ymd(paste(year, month, "01", sep = "-")))
+
+# Calculate the prediction intervals
+baseline_lags_gp <- baseline_lags_gp %>%
+  mutate(predicted_temp = mu,
+         lower_bound = qnorm(0.025, mean = mu, sd = sigma),
+         upper_bound = qnorm(0.975, mean = mu, sd = sigma))
+
+
+# Create the ggplot
+baseline_lags_gp <- baseline_lags_gp %>% 
+  filter(county %in% c("Los Angeles", "Sacramento", "Placer", "Stanislaus", "Kern", "Fresno"))
+
+
+ggplot(baseline_lags_gp, aes(x = date)) +
+  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = 'lightcoral', alpha = 0.4) +  # Ribbon for prediction interval
+  geom_line(aes(y = predicted_temp), color = '#8C1515', size = 1.2) +  # Prediction line
+  geom_point(aes(y = temperature), color = 'blue', size = 2) +  # True temperature as blue dots
+  labs(title = "Prediction of Temperature Values w/ Baseline Temp:{L12} gp anom Lags",
+       x = "Date",
+       y = "Temperature") +
+  theme_bw() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    strip.text = element_text(size = 14, face = "bold"),
+    panel.grid.major = element_line(size = 0.5, linetype = 'dotted', color = 'gray'),
+    panel.grid.minor = element_blank()
+  ) +
+  facet_wrap(~ county, scales = "free_y", ncol = 2, nrow = 3)
+
+```
+
+
