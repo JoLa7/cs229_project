@@ -112,12 +112,10 @@ prev_yr_lags = [12]
 data = create_lagged_variables(data, lagged_vars, prev_yr_lags)
 
 ### Create list of variables to fit the data ###
-fit_vars = data.columns.to_list()
 
-fit_vars.remove("year")
-fit_vars.remove("county")
-fit_vars.remove("temperature") # pretty sure we gotta remove temperature since that is what we are predicting
-print(fit_vars)
+fit_vars = ["year", "month","temp_anom_L12"]
+
+
 
 ################################ Model Validation ##############################
 
@@ -228,14 +226,9 @@ for test_year in [2018, 2019, 2020, 2021, 2022, 2023, 2024]: # 6 years Mauricio 
     X_test[test_year] = np.array(test[fit_vars])
     y_test[test_year] = np.array(test["temperature"])
 
-    if test_year <= 2023:
-        best_model[test_year] = xgbd_model.fit(
-            X_train[test_year],
-            y_train[test_year],
-            eval_set = [(X_test[test_year], y_test[test_year])])
-
-    else: # year 2024 
-        best_model[test_year] = xgbd_model.fit(X_train[test_year], y_train[test_year])
+    best_model[test_year] = xgbd_model.fit(
+        X_train[test_year],
+        y_train[test_year])
 
 
 ########################### Feature Importance #################################
@@ -285,10 +278,10 @@ for test_year in [2018, 2019, 2020, 2021, 2022, 2023, 2024]:
         predict_df[test_year][f"q{round(q, 2)}"] = norm.ppf(q, predict_df[test_year]["mu"], predict_df[test_year]["sigma"])
     
     # using the row, we calculate the quantile score
-    if test_year <= 2023:
+    if test_year <= 2024: # will make sense once we add 2025)
         predict_df[test_year]["quantile_score"] = predict_df[test_year].apply(
             lambda row: quantile_score(row["temperature"], row[[f'q{q}' for q in quantiles]]), axis=1)
-    if test_year == 2024:
+    if test_year > 2024: # implying 2025
         predict_df[test_year]["quantile_score"] = 0
 
     # Subset columns for the specific DataFrame
