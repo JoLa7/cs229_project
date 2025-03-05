@@ -93,13 +93,7 @@ data = create_lagged_variables(data, lagged_vars, prev_yr_lags)
 data = data.sort_values(by = ["year", "county", "month"])
 
 ### Create list of variables to fit the data ###
-fit_vars = data.columns.to_list()
-
-fit_vars.remove("year")
-fit_vars.remove("county")
-fit_vars.remove("temperature") # pretty sure we gotta remove temperature since that is what we are predicting
-fit_vars.remove("soil_temperature_layer_1")
-print(fit_vars)
+fit_vars = ["year", "month",'temperature_L1', 'temperature_L2', 'temperature_L3', 'temperature_L4', 'temperature_L5', 'temperature_L6', 'temperature_L7', 'temperature_L8', 'temperature_L9', 'temperature_L10', 'temperature_L11', 'temperature_L12', 'temperature_L24', 'temperature_L36', 'soil_temperature_layer_1_L12']
 #### Now we go ahead and subset the data ####
 
 data = data[data["year"] >= 1991]
@@ -223,14 +217,9 @@ for test_year in [2018, 2019, 2020, 2021, 2022, 2023, 2024]: # 6 years Mauricio 
     X_test[test_year] = np.array(test[fit_vars])
     y_test[test_year] = np.array(test["temperature"])
 
-    if test_year <= 2023:
-        best_model[test_year] = xgbd_model.fit(
-            X_train[test_year],
-            y_train[test_year],
-            eval_set = [(X_test[test_year], y_test[test_year])])
-
-    else: # year 2024 
-        best_model[test_year] = xgbd_model.fit(X_train[test_year], y_train[test_year])
+    best_model[test_year] = xgbd_model.fit(
+        X_train[test_year],
+        y_train[test_year])
         
         
 ######################### Using the models we trained and tested, we create simulations ############################
@@ -344,7 +333,7 @@ for _, row in year_month_combinations.iterrows():
             "month": month
         }
 
-        if test_year <= 2023: # change once we get 2024 data
+        if test_year <= 2024: # change once we get 2024 data (will make sense once we introduce 2025 year)
             # retreive the observed temp for the month
             observed_temp_series = all_simulation_results_df.loc[cond, "temperature"]
             observed_temp = observed_temp_series.iloc[0]
