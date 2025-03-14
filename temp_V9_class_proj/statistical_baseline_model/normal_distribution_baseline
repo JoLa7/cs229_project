@@ -48,14 +48,14 @@ n_counties = len(counties)
 ###############################
 # 4) Prepare Storage
 ###############################
-# We have test_year in [2017..2023], which is 7 distinct years
+# We have test_year in [2018..2024], which is 7 distinct years
 store_params = np.zeros((7, 12 * n_counties, 2))  # shape: (7, 12*n_counties, 2)
 
 ###############################
 # 5) Fit Normal Parameters 
 ###############################
-for test_year in range(2017, 2024):
-    year_idx = test_year - 2017
+for test_year in range(2018, 2025):
+    year_idx = test_year - 2018
     
     data_train = data[data["year"] < test_year]
     # data_test = data[data["year"] > test_year]  # Not explicitly needed for fitting.
@@ -88,8 +88,8 @@ quantiles = np.array([round(q, 2) for q in np.arange(0.01, 1, 0.01)])
 all_results = []
 errors_ll = []  # store log-likelihood results
 
-for test_year in range(2017, 2024):
-    year_idx = test_year - 2017
+for test_year in range(2018, 2025):
+    year_idx = test_year - 2018
     
     data_test = data[data["year"] == test_year]
     
@@ -138,7 +138,7 @@ for test_year in range(2017, 2024):
 # 7) Finalize / Save Results
 ###############################
 final_df = pd.concat(all_results, ignore_index=True)
-print(f"Overall mean Log-Likelihood from 2017-2023 = {np.mean(errors_ll):.3f}")
+print(f"Overall mean Log-Likelihood from 2018-2025 = {np.mean(errors_ll):.3f}")
 
 # Save final CSV
 #final_df.to_csv("baseline_normal_with_quantile_scores.csv", index=False)
