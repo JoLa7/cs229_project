@@ -57,8 +57,7 @@ store_params = np.zeros((7, 12 * n_counties, 2))  # shape: (7, 12*n_counties, 2)
 for test_year in range(2017, 2024):
     year_idx = test_year - 2017
     
-    # *Note:* your code had train <= test_year, test > test_year
-    data_train = data[data["year"] <= test_year]
+    data_train = data[data["year"] < test_year]
     # data_test = data[data["year"] > test_year]  # Not explicitly needed for fitting.
     
     idx = 0
